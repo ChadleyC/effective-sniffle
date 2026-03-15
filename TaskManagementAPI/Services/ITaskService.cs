@@ -1,10 +1,12 @@
 using TaskManagementAPI.DTOs;
-using TaskManagementAPI.Models;
 
-namespace TaskManagementAPI.Services
+namespace TaskManagementAPI.Services;
+
+public interface ITaskService
 {
-    public interface ITaskService
-    {
-        // Define methods here (e.g., GetTasks, CreateTask, etc.)
-    }
+    IEnumerable<TaskDto> GetByProject(int projectId);
+    TaskDto GetById(int id);
+    TaskDto Create(CreateTaskDto dto);
+    void UpdateStatus(int id, string status);
+    void Delete(int id);
 }

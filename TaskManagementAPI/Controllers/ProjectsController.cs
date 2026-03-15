@@ -1,19 +1,40 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagementAPI.DTOs;
 using TaskManagementAPI.Services;
 
-namespace TaskManagementAPI.Controllers
+namespace TaskManagementAPI.Controllers;
+
+[Authorize]
+[ApiController]
+[Route("api/[controller]")]
+public class ProjectsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProjectsController : ControllerBase
+    private readonly IProjectService _projectService;
+
+    public ProjectsController(IProjectService projectService)
     {
-        // Inject IProjectService here
+        _projectService = projectService;
+    }
 
-        // [HttpGet]
-        // public IActionResult GetAll() { ... }
+    // GET /api/projects
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        return Ok(_projectService.GetAll());
+    }
 
-        // [HttpPost]
-        // public IActionResult Create(ProjectDto dto) { ... }
+    // POST /api/projects
+    [HttpPost]
+    public IActionResult Create(CreateProjectDto dto)
+    {
+        var ownerId = int.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var project = _projectService.Create(dto, ownerId);
+
+        return Ok(project);
     }
 }

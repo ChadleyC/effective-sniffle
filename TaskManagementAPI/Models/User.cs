@@ -1,16 +1,13 @@
-namespace TaskManagementAPI.Models
+using System.ComponentModel.DataAnnotations;
+public class User
 {
-    public class User
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public DateTime CreatedAt { get; set; }
-        
-        // Navigation properties
-        public ICollection<Project> Projects { get; set; }
-        public ICollection<Task> AssignedTasks { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-    }
+    public int Id { get; set; }
+
+    [Required]
+    public string Email { get; set; } = string.Empty;
+
+    [Required]
+    public string PasswordHash { get; set; } = string.Empty;
+
+    public required ICollection<TaskItem> TaskItem { get; set; } = new List<TaskItem>();
 }

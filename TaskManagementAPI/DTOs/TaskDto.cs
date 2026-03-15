@@ -1,11 +1,22 @@
-namespace TaskManagementAPI.DTOs
+using TaskManagementAPI.Models.Enums;
+
+namespace TaskManagementAPI.DTOs;
+
+public class TaskDto
 {
-    public class TaskDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Status { get; set; }
-        public int ProjectId { get; set; }
-    }
+    public int Id { get; set; }
+
+    public string Title { get; set; } = string.Empty;
+
+    public string? Description { get; set; }
+
+    public TaskStatus Status { get; set; }
+
+    public TaskPriority Priority { get; set; }
+
+    public int ProjectId { get; set; }
+
+    public int? AssignedToId { get; set; }
+
+    public DateTime CreatedAt { get; set; }
 }

@@ -1,19 +1,40 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskManagementAPI.DTOs;
 using TaskManagementAPI.Services;
+using TaskManagementAPI.Data;
 
-namespace TaskManagementAPI.Controllers
+namespace TaskManagementAPI.Data;
+
+[ApiController]
+[Route("api/[controller]")]
+public class AuthController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    private readonly IAuthService _authService;
+
+    public AuthController(IAuthService authService)
     {
-        // Inject IAuthService here
+        _authService = authService;
+    }
 
-        // [HttpPost("register")]
-        // public IActionResult Register(RegisterDto dto) { ... }
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(RegisterDto dto)
+    {
+        var result = await _authService.Register(dto);
 
-        // [HttpPost("login")]
-        // public IActionResult Login(LoginDto dto) { ... }
+        if (!result)
+            return BadRequest("Email already exists");
+
+        return Ok("User registered successfully");
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginDto dto)
+    {
+        var token = await _authService.Login(dto);
+
+        if (token == null)
+            return Unauthorized("Invalid credentials");
+
+        return Ok(new { token });
     }
 }

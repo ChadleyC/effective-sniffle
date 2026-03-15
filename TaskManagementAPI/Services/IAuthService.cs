@@ -1,10 +1,9 @@
 using TaskManagementAPI.DTOs;
-using TaskManagementAPI.Models;
 
-namespace TaskManagementAPI.Services
+namespace TaskManagementAPI.Services;
+
+public interface IAuthService
 {
-    public interface IAuthService
-    {
-        // Define methods here (e.g., Login, Register)
-    }
+    Task<string?> Login(LoginDto dto);
+    Task<bool> Register(RegisterDto dto);
 }
