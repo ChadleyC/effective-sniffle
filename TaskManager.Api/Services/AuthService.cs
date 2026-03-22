@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using TaskManager.Api.Data;
 using TaskManager.Api.DTOs;
 using TaskManager.Api.Models.Enums;
 

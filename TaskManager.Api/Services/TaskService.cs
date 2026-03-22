@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using TaskManager.Api.Data;
 using TaskManager.Api.DTOs;
 using TaskManager.Api.Models;
+using TaskStatus = TaskManager.Api.Models.Enums.TaskStatus;
 
 namespace TaskManager.Api.Services;
 
@@ -32,16 +32,7 @@ public class TaskService : ITaskService
 
     public TaskDto Create(CreateTaskDto dto)
     {
-        var task = new TaskItem
-        {
-            Title = dto.Title,
-            Description = dto.Description,
-            ProjectId = dto.ProjectId,
-            AssignedToId = dto.AssignedToId,
-            Priority = dto.Priority,
-            Status = TaskStatus.Todo,
-            DueDate = dto.DueDate
-        };
+        var task = MapToModel(dto);
 
         _context.Tasks.Add(task);
         _context.SaveChanges();
@@ -49,12 +40,17 @@ public class TaskService : ITaskService
         return MapToDto(task);
     }
 
-    public void UpdateStatus(int id, TaskStatus status)
+    public void UpdateStatus(int id, string status)
     {
-        var task = _context.Tasks.Find(id)
-            ?? throw new Exception("Task not found");
+        var task = _context.Tasks.Find(id);
 
-        task.Status = status;
+        if (task == null)
+        {
+            return;
+        }
+
+        task.Status = Enum.GetValues<TaskStatus>().FirstOrDefault(x => nameof(x) == status);
+        _context.Tasks.Update(task);
         _context.SaveChanges();
     }
 
@@ -78,5 +74,17 @@ public class TaskService : ITaskService
         AssignedToId = t.AssignedToId,
         CreatedAt = t.CreatedAt,
         DueDate = t.DueDate
+    };
+
+    private static TaskItem MapToModel(CreateTaskDto dto) => new()
+    {
+        Title = dto.Title,
+        Description = dto.Description,
+        Priority = dto.Priority,
+        ProjectId = dto.ProjectId,
+        AssignedToId = dto.AssignedToId,
+        CreatedAt = DateTime.UtcNow,
+        DueDate = dto.DueDate,
+        Status = dto.Status
     };
 }

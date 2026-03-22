@@ -1,5 +1,5 @@
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
@@ -26,7 +26,6 @@ public class TokenService : ITokenService
         );
 
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
         var token = new JwtSecurityToken(
             issuer: _config["Jwt:Issuer"],

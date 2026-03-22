@@ -1,4 +1,5 @@
 using TaskManager.Api.Models.Enums;
+using TaskStatus = TaskManager.Api.Models.Enums.TaskStatus;
 
 namespace TaskManager.Api.DTOs;
 
@@ -19,4 +20,5 @@ public class TaskDto
     public int? AssignedToId { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    public DateTime? DueDate { get; set; }
 }

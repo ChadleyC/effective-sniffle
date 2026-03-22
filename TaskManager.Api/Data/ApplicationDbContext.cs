@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Api.Models;
+using TaskManager.Api.Models.Enums;
 
 
 namespace TaskManager.Api.Data
@@ -13,7 +14,7 @@ namespace TaskManager.Api.Data
         public DbSet<TaskItem> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<TaskModel> TaskItem { get; set; }
+        public DbSet<TaskItem> TaskItem { get; set; }
         public DbSet<Comment> Comments { get; set; }
         
 

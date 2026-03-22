@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.DTOs;
 using TaskManager.Api.Services;
 using TaskManager.Api.Models.Enums;
+using TaskStatus = TaskManager.Api.Models.Enums.TaskStatus;
 
 namespace TaskManager.Api.Controllers;
 
@@ -43,9 +44,9 @@ public class TasksController : ControllerBase
     // PUT /api/tasks/10/status?status=Done
     [HttpPut("{id}/status")]
     public IActionResult UpdateStatus(int id, [FromQuery] TaskStatus status)
-    {
-        _taskService.UpdateStatus(id, status);
-        return NoContent();
+    { 
+        _taskService.UpdateStatus(id, nameof(status));
+        return Ok();
     }
 
     // DELETE /api/tasks/10
@@ -53,6 +54,6 @@ public class TasksController : ControllerBase
     public IActionResult Delete(int id)
     {
         _taskService.Delete(id);
-        return NoContent();
+        return Ok();
     }
 }

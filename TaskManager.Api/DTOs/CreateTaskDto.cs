@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using TaskManager.Api.Models.Enums;
+using TaskStatus = TaskManager.Api.Models.Enums.TaskStatus;
 
 namespace TaskManager.Api.DTOs;
 
@@ -17,6 +18,8 @@ public class CreateTaskDto
     public int? AssignedToId { get; set; }
 
     public TaskPriority Priority { get; set; } = TaskPriority.Medium;
+    
+    public TaskStatus Status { get; set; }
 
     public DateTime? DueDate { get; set; }
 }
