@@ -32,3 +32,15 @@ C:\Users\Dylano\source\repos\effective-sniffle\TaskManager.Api\obj\Debug\net10.0
 C:\Users\Dylano\source\repos\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.pdb
 C:\Users\Dylano\source\repos\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.genruntimeconfig.cache
 C:\Users\Dylano\source\repos\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\ref\TaskManager.Api.dll
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.csproj.AssemblyReference.cache
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.AssemblyInfoInputs.cache
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.AssemblyInfo.cs
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.csproj.CoreCompileInputs.cache
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.sourcelink.json
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.dll
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\refint\TaskManager.Api.dll
+C:\Users\Dylano\Documents\GitHub\effective-sniffle\TaskManager.Api\obj\Debug\net10.0\TaskManager.Api.pdb

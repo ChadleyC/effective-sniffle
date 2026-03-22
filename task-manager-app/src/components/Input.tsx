@@ -18,6 +18,28 @@ value={value}
 onChange={(e)=>onChange(e.target.value)}
 />
 
+<input
+aria-label="Task Title"
+placeholder="Task Title"
+/>
+
+<button
+aria-label="Create Project"
+onClick={createProject}
+>
+Create
+</button>
+
+<button
+onKeyDown={(e)=>{
+if(e.key==="Enter"){
+createProject()
+}
+}}
+>
+Create
+</button>
+
 </div>
 )
 }
