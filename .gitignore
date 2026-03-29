@@ -2,3 +2,15 @@ TaskManagementAPI/obj
 TaskManagementAPI/bin
 .idea/.idea.TaskManagementSystem/.idea
 TaskManager.Api/obj
+node_modules
+dist
+*/node_modules
+*/*/node_modules
+.DS_Store
+.vscode
+*.log
+
+TaskManager.Api/bin
+node_modules
+TaskManager.Api/bin
+node_modules
