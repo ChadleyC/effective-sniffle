@@ -10,7 +10,7 @@ public class AuthService : IAuthService
 {
     private readonly ApplicationDbContext _context;
     private readonly ITokenService _tokenService;
-
+    
     public AuthService(
         ApplicationDbContext context,
         ITokenService tokenService)
@@ -27,7 +27,8 @@ public class AuthService : IAuthService
         var user = new User
         {
             Email = dto.Email,
-            PasswordHash = Hash(dto.Password)
+            PasswordHash = Hash(dto.Password),
+            TaskItem = null
         };
 
         _context.Users.Add(user);
