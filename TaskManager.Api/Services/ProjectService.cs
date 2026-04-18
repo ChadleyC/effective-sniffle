@@ -1,7 +1,7 @@
 using TaskManager.Api.Data;
 using TaskManager.Api.DTOs;
 using TaskManager.Api.Models;
-using System.Security.Claims;
+
 
 namespace TaskManager.Api.Services;
 
@@ -28,20 +28,13 @@ public class ProjectService : IProjectService
         }).ToList();
     }
 
-    public ProjectDto Create(CreateProjectDto dto, int ownerId)
-    {
-        throw new NotImplementedException();
-    }
-
     public ProjectDto Create(CreateProjectDto dto)
     {
         var project = new Project
         {
             Name = dto.Name,
             Description = dto.Description,
-            OwnerId = dto.OwnerId,
             CreatedAt = DateTime.UtcNow,
-            TaskItem = null
         };
 
         _context.Projects.Add(project);

@@ -12,10 +12,12 @@ public class TaskItem
     [MaxLength(200)]
     public string Title { get; set; } = string.Empty;
 
+    public string IsCompleted { get; set; } = null!;
+
     public string? Description { get; set; }
 
     // Todo | InProgress | Done  (we’ll convert to enum next step)
-    [Required]
+        [Required]
     public TaskStatus Status { get; set; } = TaskStatus.Todo;
 
     // Low | Medium | High

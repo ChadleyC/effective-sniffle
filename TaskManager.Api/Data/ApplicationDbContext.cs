@@ -5,12 +5,8 @@ using TaskManager.Api.Models.Enums;
 
 namespace TaskManager.Api.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
-        }
-
         public DbSet<TaskItem> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -29,6 +25,12 @@ namespace TaskManager.Api.Data
         modelBuilder.Entity<TaskItem>()
         .Property(t => t.Priority)
         .HasConversion<string>();
+
+        modelBuilder.Entity<Project>()
+            .HasMany(p => p.TaskItems)
+            .WithOne(t => t.Project)
+            .HasForeignKey(t => t.ProjectId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

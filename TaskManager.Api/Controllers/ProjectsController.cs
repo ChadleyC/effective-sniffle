@@ -33,7 +33,7 @@ public class ProjectsController : ControllerBase
             User.FindFirstValue(ClaimTypes.NameIdentifier)!
         );
 
-        var project = _projectService.Create(dto, ownerId);
+        var project = _projectService.Create(dto);
 
         return Ok(project);
     }

@@ -5,5 +5,5 @@ namespace TaskManager.Api.Services;
 public interface IProjectService
 {
     IEnumerable<ProjectDto> GetAll();
-    ProjectDto Create(CreateProjectDto dto, int ownerId);
+    ProjectDto Create(CreateProjectDto dto);
 }
