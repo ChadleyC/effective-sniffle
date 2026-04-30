@@ -1,32 +1,25 @@
-import { Task } from "../types"
+import type { Task } from "../types"
 
 interface Props {
-tasks: Task[]
+  tasks: Task[]
 }
 
-const TaskStats = ({tasks}:Props) => {
+const TaskStats = ({ tasks }: Props) => {
 
-const total = tasks.length
-const completed = tasks.filter(t=>t.status==="Done").length
+  const total = tasks.length
+  const completed = tasks.filter(t => t.status === "Done").length
 
-const overdue = tasks.filter(
-t => new Date(t.dueDate) < new Date() && t.status !== "Done"
-).length
+  const overdue = tasks.filter(
+    t => t.dueDate && new Date(t.dueDate) < new Date() && t.status !== "Done"
+  ).length
 
-return(
-
-<div className="stats">
-
-<div>Total Tasks: {total}</div>
-
-<div>Completed: {completed}</div>
-
-<div>Overdue: {overdue}</div>
-
-</div>
-
-)
-
+  return (
+    <div className="stats">
+      <div>Total Tasks: {total}</div>
+      <div>Completed: {completed}</div>
+      <div>Overdue: {overdue}</div>
+    </div>
+  );
 }
 
-export default TaskStats
+export default TaskStats;

@@ -1,47 +1,54 @@
-import { useEffect,useState } from "react"
-import { getComments,addComment } from "../services/commentService"
-import { Comment } from "../types"
+import React, { useEffect, useState } from "react";
+import { getComments, addComment } from "../services/commentService";
+import type { Comment } from "../types";
 
-const Comments = ({taskId}:{taskId:number}) => {
+const Comments = ({ taskId }: { taskId: number }) => {
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [text, setText] = useState("");
 
-const [comments,setComments]=useState<Comment[]>([])
-const [text,setText]=useState("")
+  useEffect(() => {
+    loadComments();
+  }, [taskId]);
 
-useEffect(()=>{
-loadComments()
-},[])
+  const loadComments = async () => {
+    const data = await getComments(taskId);
+    setComments(data);
+  };
 
-const loadComments=async()=>{
-const data=await getComments(taskId)
-setComments(data)
-}
+  const submit = async () => {
+    if (!text.trim()) return;
+    await addComment(taskId, text);
+    setText("");
+    loadComments();
+  };
 
-const submit=async()=>{
-await addComment(taskId,text)
-setText("")
-loadComments()
-}
+  return (
+    <div className="space-y-4">
+      <h4 className="font-h3 text-h3">Comments</h4>
+      <div className="space-y-2">
+        {comments.map((c) => (
+          <div key={c.id} className="p-3 bg-slate-50 rounded-lg border border-slate-100">
+            <p className="text-body-sm font-bold text-slate-900">{c.user?.username || 'User'}</p>
+            <p className="text-body-sm text-on-surface-variant">{c.content}</p>
+          </div>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        <input
+          className="flex-1 px-4 py-2 rounded-lg border border-slate-200 text-body-sm focus:ring-2 focus:ring-primary outline-none"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Add a comment..."
+        />
+        <button 
+          className="px-4 py-2 bg-primary text-white rounded-lg font-bold text-label-sm"
+          onClick={submit}
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  );
+};
 
-return(
-
-<div>
-
-<h4>Comments</h4>
-
-{comments.map(c=>(
-<p key={c.id}>{c.author}: {c.content}</p>
-))}
-
-<input
-value={text}
-onChange={(e)=>setText(e.target.value)}
-/>
-
-<button onClick={submit}>Add</button>
-
-</div>
-
-)
-}
-
-export default Comments
+export default Comments;

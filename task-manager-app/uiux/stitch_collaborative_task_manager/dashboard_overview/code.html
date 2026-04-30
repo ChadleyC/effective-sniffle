@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>TaskFlow Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#eeefff",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f0f0fb",
+                        "on-background": "#191b23",
+                        "background": "#faf8ff",
+                        "surface-container-high": "#e7e7f3",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191b23",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "primary": "#004ac6",
+                        "on-surface-variant": "#434655",
+                        "secondary": "#505f76",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "secondary-container": "#d0e1fb",
+                        "on-primary-fixed": "#00174b",
+                        "inverse-surface": "#2e3039",
+                        "tertiary": "#943700",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-dim": "#d9d9e5",
+                        "surface-container-low": "#f3f3fe",
+                        "surface-container": "#ededf9",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e1e2ed",
+                        "inverse-primary": "#b4c5ff",
+                        "on-tertiary-container": "#ffede6",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#54647a",
+                        "primary-container": "#2563eb",
+                        "surface-tint": "#0053db",
+                        "outline": "#737686",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-variant": "#e1e2ed",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#bc4800",
+                        "surface": "#faf8ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "tertiary-fixed": "#ffdbcd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "base": "8px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "2xl": "48px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-base": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-md": ["13px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            background-color: #faf8ff;
+        }
+    </style>
+</head>
+<body class="font-body-base text-on-surface">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full h-16 flex items-center justify-between px-6 z-40 bg-white dark:bg-slate-900 shadow-sm border-b border-slate-200 dark:border-slate-800 font-inter antialiased text-sm">
+    <div class="flex items-center gap-8">
+        <span class="text-xl font-bold text-blue-600 dark:text-blue-400">TaskFlow</span>
+        <div class="hidden md:flex items-center gap-4">
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                <input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary w-64 text-body-sm"
+                       placeholder="Search tasks..." type="text"/>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors active:scale-95 duration-150">
+            <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+        </button>
+        <button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors active:scale-95 duration-150">
+            <span class="material-symbols-outlined" data-icon="help">help</span>
+        </button>
+        <div class="h-8 w-8 rounded-full overflow-hidden border border-slate-200">
+            <img alt="User Avatar"
+                 data-alt="A professional headshot of a young female executive with a confident smile, set against a blurred corporate office background. The lighting is soft and natural, emphasizing a bright and modern light-mode aesthetic. The color palette features clean whites and professional blues, reflecting a high-end, productive atmosphere."
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqofQJ7FUjVmEfSrYNfikdZOHDNgCHVd4AmFJHV6uIkelpOvmDUob3Es9TcnD_BEAZfFK55DBzXmfaEMQIXhciOusQ9uXMA0Cnj_FeYFJ6ij83j3NyFGM7ADUMaZDUWhFyJee434wAcCS7THObw49GHLC-ajj6djA3QWqV_Ht1LxugBZAHbYKf7F5JwYgXpxIArdNt5eDQLfhxOhxd20N4-OcOIpOPL-HPAWxlFD-gieXX08XRNTvvHlyA04gXIcorqzxcuoaqYOg"/>
+        </div>
+    </div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col z-50 pt-16">
+    <div class="px-6 py-6 border-b border-slate-100">
+        <div class="flex items-center gap-3 mb-1">
+            <div class="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
+            </div>
+            <div>
+                <h2 class="text-slate-900 dark:text-white text-lg font-black tracking-tight leading-none">Workspace</h2>
+                <p class="text-slate-500 text-[10px] uppercase font-bold tracking-wider mt-0.5">Corporate Team</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 py-4 font-inter text-sm font-medium">
+        <div class="space-y-1">
+            <a class="flex items-center gap-3 px-6 py-3 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 bg-blue-50/50 dark:bg-blue-900/20 active:opacity-80 transition-all"
+               href="#">
+                <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+               href="#">
+                <span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+                <span>Projects</span>
+            </a>
+            <a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+               href="#">
+                <span class="material-symbols-outlined" data-icon="settings">settings</span>
+                <span>Settings</span>
+            </a>
+        </div>
+        <div class="mt-8 px-6">
+            <button class="w-full bg-primary text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-sm">add</span>
+                Create Task
+            </button>
+        </div>
+    </nav>
+    <div class="p-6 border-t border-slate-100">
+        <a class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+           href="#">
+            <span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+            <span>Support</span>
+        </a>
+    </div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] mt-16 p-8 min-h-screen">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <h1 class="font-h1 text-h1 text-on-surface">Executive Overview</h1>
+                <p class="font-body-base text-slate-500 mt-1">Monitor your team's throughput and project velocity.</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg text-slate-600 font-medium hover:bg-white transition-colors">
+                    <span class="material-symbols-outlined text-md">filter_list</span>
+                    Filters
+                </button>
+                <button class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-600 font-medium hover:bg-slate-50 transition-colors">
+                    <span class="material-symbols-outlined text-md">download</span>
+                    Export
+                </button>
+            </div>
+        </div>
+        <!-- Summary Metrics Section (Bento Style) -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-[0px_2px_4px_rgba(0,0,0,0.05)] flex flex-col justify-between h-32">
+                <div class="flex justify-between items-start">
+                    <span class="text-slate-500 font-label-md">TOTAL TASKS</span>
+                    <div class="bg-blue-50 p-1.5 rounded-lg">
+                        <span class="material-symbols-outlined text-primary text-xl">list_alt</span>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-bold text-slate-900">1,284</span>
+                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md">+12%</span>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-[0px_2px_4px_rgba(0,0,0,0.05)] flex flex-col justify-between h-32">
+                <div class="flex justify-between items-start">
+                    <span class="text-slate-500 font-label-md">IN PROGRESS</span>
+                    <div class="bg-amber-50 p-1.5 rounded-lg">
+                        <span class="material-symbols-outlined text-amber-600 text-xl">pending</span>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-bold text-slate-900">342</span>
+                    <span class="text-xs font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-md">Stable</span>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-[0px_2px_4px_rgba(0,0,0,0.05)] flex flex-col justify-between h-32">
+                <div class="flex justify-between items-start">
+                    <span class="text-slate-500 font-label-md">COMPLETED</span>
+                    <div class="bg-emerald-50 p-1.5 rounded-lg">
+                        <span class="material-symbols-outlined text-emerald-600 text-xl">check_circle</span>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-bold text-slate-900">894</span>
+                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md">+24%</span>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-[0px_2px_4px_rgba(0,0,0,0.05)] flex flex-col justify-between h-32">
+                <div class="flex justify-between items-start">
+                    <span class="text-slate-500 font-label-md">OVERDUE</span>
+                    <div class="bg-red-50 p-1.5 rounded-lg">
+                        <span class="material-symbols-outlined text-red-600 text-xl">error</span>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-bold text-slate-900">48</span>
+                    <span class="text-xs font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-md">-5%</span>
+                </div>
+            </div>
+        </div>
+        <!-- Dashboard Layout Grid -->
+        <div class="grid grid-cols-12 gap-8 items-start">
+            <!-- Main Activity Column -->
+            <div class="col-span-12 lg:col-span-8 space-y-8">
+                <!-- Recent Projects Grid -->
+                <section>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-h2 text-h2">Recent Projects</h2>
+                        <button class="text-primary font-semibold text-sm hover:underline">View All</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Project Card 1 -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="h-12 w-12 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
+                                    <span class="material-symbols-outlined text-slate-600">rocket_launch</span>
+                                </div>
+                                <div class="flex -space-x-2">
+                                    <img class="w-8 h-8 rounded-full border-2 border-white"
+                                         data-alt="A focused male software developer in a modern workspace, with soft morning light hitting his desk. The scene is calm and professional, with a clean desk featuring a high-end monitor and a designer coffee mug. The color palette is minimal, dominated by warm wood tones and professional grey shades."
+                                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFhjK2vICQJrrrs8np6_w6ju1MbLc2SJtRF2rU6cLuF0tyfuie1VSHvKLLIgnsb6dDAfLBt0qJbA5Swwf8JN7VC2uAINVoBuzMK7iDhEl93g7oHIMOpusE_Mgorv1JZhidwWBhlgSiHI9N1J8IZtgvLYrj_B6hV7ewgJCC1LlksDYhGkfT_-XI8ReIW8YT0TYDzRA0LnIwWkI2feTHbEjIuh7fptXwAzsu8EHPnoMpXDPgVWtcdUZNEkt5Gl0VCE0lSYIOT8cBb5g"/>
+                                    <img class="w-8 h-8 rounded-full border-2 border-white"
+                                         data-alt="A portrait of a cheerful female creative director in a bright, sun-drenched loft studio filled with plants. The lighting is airy and high-key, creating an inspiring and productive atmosphere. The aesthetic is clean and modern, with a palette of soft greens, whites, and light wood textures."
+                                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX5YxSyXg8m1K8JTbppr14QsInsKel325kAnT6tQruMCabf4oz_7h7V0bPWRVldqfPU7lK8LnIt3zZMWNqlWtjYiQ5yCuZ6sfd-rm8gT1Yc7TP5ImUNjwEg8S6bDmCjE4gCMCHSwBXDNzy9VK7lo--HZIkCGeRvbfPtsObjOKUpu43QINLsP5kYl4Ccl9XeCfH0_PsOEO3TudADN8uAH_RE5TWbuxOEv277Z74wVlkJJ1dvTW6M6vxEUlY06c23323JSlpVzk1r3Q"/>
+                                    <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-slate-500">
+                                        +4
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="font-h3 text-h3 mb-1">Global Site Redesign</h3>
+                            <p class="text-body-sm text-slate-500 mb-6">Updating the core brand identity across all
+                                digital platforms.</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-slate-500">
+                                    <span>PROGRESS</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project Card 2 -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="h-12 w-12 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
+                                    <span class="material-symbols-outlined text-slate-600">payments</span>
+                                </div>
+                                <div class="flex -space-x-2">
+                                    <img class="w-8 h-8 rounded-full border-2 border-white"
+                                         data-alt="A close-up portrait of a thoughtful male data analyst in a sleek, glass-walled office environment. Reflections of city lights are visible in the glass, suggesting an evening work session. The mood is focused and sophisticated, utilizing a palette of deep blues, charcoal, and crisp white accents."
+                                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP5E1B7kHZp46GN6R6gyr2FazAiqo-yEu5L_OyfbAPRUU7KtN6ySwmc9ZZ5sNaVPhcl3pGBI_GAe3F78jfPUmGla0GPWZMrRhJ6FJQWs8MnG58FllndUYF7yIUeuzLi5Gb5s8twWOjGp-e0zFhvXYhlUXgXsyF_eCVqthOz3NPLr1y_V8oS4x4ZW3FXKZ2Npnha9eH5bGd3UnRpCNnI4G-fhwW_-EYUb74rIAFhLYN4Eb7tBMgl7w75dye4XZckyVD3MG3FqKxQCo"/>
+                                    <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-slate-500">
+                                        +2
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="font-h3 text-h3 mb-1">Billing System Migration</h3>
+                            <p class="text-body-sm text-slate-500 mb-6">Transitioning legacy payment gateways to the new
+                                API architecture.</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-slate-500">
+                                    <span>PROGRESS</span>
+                                    <span>42%</span>
+                                </div>
+                                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary rounded-full" style="width: 42%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Large Task Chart Placeholder (Visual Complexity) -->
+                <section class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="font-h2 text-h2">Velocity Trends</h2>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-primary"></div>
+                                <span class="text-xs font-medium text-slate-500">Planned</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-slate-200"></div>
+                                <span class="text-xs font-medium text-slate-500">Actual</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full h-64 flex items-end justify-between gap-2 px-2">
+                        <div class="flex flex-col items-center gap-2 w-full">
+                            <div class="w-full bg-slate-100 rounded-t-lg h-[40%]"></div>
+                            <div class="w-full bg-primary rounded-t-lg h-[60%]"></div>
+                            <span class="text-[10px] font-bold text-slate-400">MON</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-full">
+                            <div class="w-full bg-slate-100 rounded-t-lg h-[50%]"></div>
+                            <div class="w-full bg-primary rounded-t-lg h-[75%]"></div>
+                            <span class="text-[10px] font-bold text-slate-400">TUE</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-full">
+                            <div class="w-full bg-slate-100 rounded-t-lg h-[30%]"></div>
+                            <div class="w-full bg-primary rounded-t-lg h-[45%]"></div>
+                            <span class="text-[10px] font-bold text-slate-400">WED</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-full">
+                            <div class="w-full bg-slate-100 rounded-t-lg h-[60%]"></div>
+                            <div class="w-full bg-primary rounded-t-lg h-[90%]"></div>
+                            <span class="text-[10px] font-bold text-slate-400">THU</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-full">
+                            <div class="w-full bg-slate-100 rounded-t-lg h-[45%]"></div>
+                            <div class="w-full bg-primary rounded-t-lg h-[70%]"></div>
+                            <span class="text-[10px] font-bold text-slate-400">FRI</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 w-full">
+                            <div class="w-full bg-slate-100 rounded-t-lg h-[20%]"></div>
+                            <div class="w-full bg-primary rounded-t-lg h-[30%]"></div>
+                            <span class="text-[10px] font-bold text-slate-400">SAT</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- Recent Activity Sidebar Feed -->
+            <div class="col-span-12 lg:col-span-4">
+                <section class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h2 class="font-h2 text-h2 mb-6">Team Activity</h2>
+                    <div class="space-y-6">
+                        <!-- Activity Item 1 -->
+                        <div class="flex gap-4">
+                            <div class="relative">
+                                <img class="w-10 h-10 rounded-full shrink-0"
+                                     data-alt="A portrait of a male product manager in a high-tech conference room, looking towards a digital whiteboard. The lighting is cool and professional, with blue and white tones dominating the space. The environment feels efficient and modern, emphasizing collaboration and high-level project management."
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqZVlBxIIzMEHkA4J54pzgtqZppLulI2dKnKi6BYiCT0EzqvzafKtuKKgX5eHVq8XQjatTU548_cHlb1fHwU0lebVYPoLWYlqfXWtgAIvEs-VJiaQrnfEmiC5K6XpnLDfWOqtUODwM5q5xsy5l-lLDkkB1rL6PNmk-1UvjrpY-DK0dbjRXLhfsn0pywdXfIAGWJVwFMgI0JZfxKRIPZhdWxOI9VQol9vd6c0DhuaTNAxkHCY9gBnq3i4TbbG4yxawpAqSrzsUKRy4"/>
+                                <div class="absolute -bottom-1 -right-1 bg-emerald-500 w-3.5 h-3.5 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div>
+                                <p class="text-body-sm"><span class="font-bold text-slate-900">Alex Rivera</span> added
+                                    a comment to <span class="font-bold text-primary">Database Schema</span></p>
+                                <p class="text-body-sm text-slate-500 bg-slate-50 p-2 rounded-lg mt-2 italic">"We should
+                                    normalize the user_meta table before deployment."</p>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-2 block">2 MINS AGO</span>
+                            </div>
+                        </div>
+                        <!-- Activity Item 2 -->
+                        <div class="flex gap-4">
+                            <div class="relative">
+                                <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0">
+                                    <span class="material-symbols-outlined">sync</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-body-sm"><span class="font-bold text-slate-900">Automation</span> moved
+                                    <span class="font-bold text-primary">Landing Page Mockups</span> to <span
+                                            class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-700 font-bold text-[10px]">DONE</span>
+                                </p>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-2 block">1 HOUR AGO</span>
+                            </div>
+                        </div>
+                        <!-- Activity Item 3 -->
+                        <div class="flex gap-4">
+                            <img class="w-10 h-10 rounded-full shrink-0"
+                                 data-alt="A portrait of a professional female engineer in a minimalist office with large windows. The lighting is bright and clear, reflecting a high-performance environment. The aesthetic is clean and organized, with a color palette of soft greys, white, and subtle corporate blue accents."
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvXbDc5YA5fM9b9APpq3jey-9SpLsT5kOZfRGoFWrvXuKkpohQprobtsb5thPEAU4nziWgYTtT0fXkUJBLVRQS2t8gfdPy978sGX-kbQp7IRXa8x4C-jUUUO_XnlUPl04glh7vPMhAaZT42mkKwCsvXkVkBxn_ZZqIUQNZY2aS5ACK8mtX09GQznRPnLQ3SkLFps-qLrBMqNkzzW1wvzZHOcpgvdazAY184Dow6a_Iz18-cG0GoZDXhcccIyAQ9RWZMQNpI0HZMPA"/>
+                            <div>
+                                <p class="text-body-sm"><span class="font-bold text-slate-900">Sarah Chen</span>
+                                    attached 4 files to <span class="font-bold text-primary">Q3 Marketing Assets</span>
+                                </p>
+                                <div class="flex gap-2 mt-2">
+                                    <div class="w-8 h-8 rounded bg-slate-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-sm text-slate-400">image</span>
+                                    </div>
+                                    <div class="w-8 h-8 rounded bg-slate-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-sm text-slate-400">description</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-2 block">3 HOURS AGO</span>
+                            </div>
+                        </div>
+                        <!-- Activity Item 4 -->
+                        <div class="flex gap-4">
+                            <div class="relative">
+                                <img class="w-10 h-10 rounded-full shrink-0"
+                                     data-alt="A portrait of a senior male executive in a luxury executive lounge, looking out over a city skyline. The lighting is dramatic and rich, with warm golden tones from the setting sun. The mood is authoritative and successful, utilizing a palette of deep mahogany, gold, and navy blue."
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCdkaZ5ry_UbYFQVV7NFWecBHMQYEjl0hbk0YCWqJvLacuNBI6sBa05dwqsuwik2iB4uoJtn_kOJVBersPZErLJ7qG62TehwYEhfqQKobL3WC7YH238vy0c1tNrMfeAQAzsX5ta03LMRmDb8eOpBH4HeSzsKmsY9OVtRVoeEPbU6PPopcfdH8gjMaHsGyvr-7sxK4wz_ykL938znnRJeOGUDumg3SCZj6lAIeW5mXI1Koc3yDcPDOcYLyLpTutMgkX8YKr9ZxEvZo"/>
+                            </div>
+                            <div>
+                                <p class="text-body-sm"><span class="font-bold text-slate-900">David Miller</span>
+                                    updated status for <span class="font-bold text-primary">Annual Audit</span> to <span
+                                            class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 font-bold text-[10px]">AT RISK</span>
+                                </p>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-2 block">5 HOURS AGO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full mt-8 py-3 border border-slate-200 rounded-lg font-bold text-slate-500 hover:bg-slate-50 transition-colors text-sm uppercase tracking-wide">
+                        Load More Activity
+                    </button>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<script>
+    
+</script>
+</html>

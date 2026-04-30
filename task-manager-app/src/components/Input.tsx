@@ -1,47 +1,22 @@
-interface Props{
-label:string
-value:string
-onChange:(v:string)=>void
-type?:string
+import React from 'react';
+import InputField from './ui/InputField';
+
+interface Props {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
 }
 
-const Input = ({label,value,onChange,type="text"}:Props) => {
+const Input = ({ label, value, onChange, type = "text" }: Props) => {
+  return (
+    <InputField
+      label={label}
+      type={type}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  );
+};
 
-return(
-<div>
-
-<label>{label}</label>
-
-<input
-type={type}
-value={value}
-onChange={(e)=>onChange(e.target.value)}
-/>
-
-<input
-aria-label="Task Title"
-placeholder="Task Title"
-/>
-
-<button
-aria-label="Create Project"
-onClick={createProject}
->
-Create
-</button>
-
-<button
-onKeyDown={(e)=>{
-if(e.key==="Enter"){
-createProject()
-}
-}}
->
-Create
-</button>
-
-</div>
-)
-}
-
-export default Input
+export default Input;

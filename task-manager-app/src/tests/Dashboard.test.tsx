@@ -1,10 +1,15 @@
-import { render,screen } from "@testing-library/react"
-import Dashboard from "./Dashboard"
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import Dashboard from '../pages/Dashboard';
+import { BrowserRouter } from 'react-router-dom';
 
-test("renders dashboard title",()=>{
-
-render(<Dashboard/>)
-
-expect(screen.getByText(/Projects/i)).toBeInTheDocument()
-
-})
+describe('Dashboard', () => {
+  test('renders dashboard title', () => {
+    render(
+      <BrowserRouter>
+        <Dashboard />
+      </BrowserRouter>
+    );
+    expect(screen.getByText(/Executive Overview/i)).toBeInTheDocument();
+  });
+});

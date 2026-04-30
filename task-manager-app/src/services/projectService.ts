@@ -1,9 +1,12 @@
 // import api from './api';
 
+export const getProjects = async () => {
+    // return api.get('/projects');
+    return [];
+};
+
 export const projectService = {
-    getAll: async () => {
-        // return api.get('/projects');
-    },
+    getAll: getProjects,
     getById: async (_id: number) => {
         // return api.get(`/projects/${id}`);
     },

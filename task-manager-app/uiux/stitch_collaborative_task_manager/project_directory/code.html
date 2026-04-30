@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project List - TaskFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#eeefff",
+                    "outline-variant": "#c3c6d7",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#f0f0fb",
+                    "on-background": "#191b23",
+                    "background": "#faf8ff",
+                    "surface-container-high": "#e7e7f3",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191b23",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "primary": "#004ac6",
+                    "on-surface-variant": "#434655",
+                    "secondary": "#505f76",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#faf8ff",
+                    "secondary-container": "#d0e1fb",
+                    "on-primary-fixed": "#00174b",
+                    "inverse-surface": "#2e3039",
+                    "tertiary": "#943700",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-dim": "#d9d9e5",
+                    "surface-container-low": "#f3f3fe",
+                    "surface-container": "#ededf9",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e1e2ed",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary-container": "#ffede6",
+                    "primary-fixed": "#dbe1ff",
+                    "secondary-fixed": "#d3e4fe",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#54647a",
+                    "primary-container": "#2563eb",
+                    "surface-tint": "#0053db",
+                    "outline": "#737686",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-variant": "#e1e2ed",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#bc4800",
+                    "surface": "#faf8ff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "tertiary-fixed": "#ffdbcd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin": "32px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "base": "8px",
+                    "lg": "24px",
+                    "gutter": "24px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-base": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "h2": ["Inter"],
+                    "h3": ["Inter"],
+                    "h1": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["13px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background font-body-base text-on-background selection:bg-secondary-container">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full h-16 flex items-center justify-between px-6 z-40 bg-white border-b border-slate-200 shadow-sm font-inter antialiased text-sm">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-600">TaskFlow</span>
+<div class="hidden md:flex items-center gap-1">
+<nav class="flex gap-2">
+<a class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">Dashboard</a>
+<a class="px-3 py-2 rounded-lg text-blue-600 border-b-2 border-blue-600 transition-colors" href="#">Projects</a>
+<a class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">Team</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 hover:bg-slate-50 transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 hover:bg-slate-50 transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-slate-200">
+<img alt="User Avatar" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhuXn3qjlMDNQx2NsFwlLSofZBRNEpeTsFpUlcn_ElaNw94_kQm1RJ9hqe5pr08PbH6fBjo_4yWzNmk6iaEE7HmXFApP9EHeQgTLPsRTK6m5dYc-wHCY-xfqiMj-6_QwtzKzjOWaJe5b5xisC8bBJ-oWEfqmSdPrJOc5zsUwTNhDlYEAr6C6tbEkOFaGOv036n_HMVByEDL8IPNuMQn6IOdXXmTpn4IHthLeRvqh24VAdn_Rf6x8TNFP6FxdN-FGFGXkvvphG_u8E"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-50 bg-white w-[280px] border-r border-slate-200 font-inter text-sm font-medium pt-20">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low">
+<div class="h-10 w-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<div>
+<h2 class="text-slate-900 font-black tracking-tight leading-tight">Workspace</h2>
+<p class="text-xs text-slate-500">Corporate Team</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-blue-600 border-l-4 border-blue-600 bg-blue-50/50 transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="assignment" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span>Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-4">
+<button class="w-full py-3 bg-primary text-white rounded-lg font-semibold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>Create Task</span>
+</button>
+</div>
+<div class="mt-auto border-t border-slate-100 p-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] pt-16 min-h-screen">
+<div class="p-xl max-w-7xl mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-lg gap-md">
+<div>
+<h1 class="font-h1 text-h1 text-on-background mb-xs">Active Projects</h1>
+<p class="font-body-base text-body-base text-on-surface-variant">Monitor and manage your team's ongoing initiatives.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-sm bg-white border border-outline-variant text-on-surface font-semibold rounded-lg flex items-center gap-xs hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="filter_list">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="px-md py-sm bg-primary text-on-primary font-semibold rounded-lg flex items-center gap-xs shadow-md shadow-primary/10 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+<span>Create New Project</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid of Projects -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Project Card 1: Priority Focus -->
+<div class="lg:col-span-2 group relative bg-white border border-slate-200 rounded-xl p-lg shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]" data-icon="rocket_launch" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-slate-900">Quantum Rebrand 2024</h3>
+<p class="text-label-sm text-primary font-bold uppercase tracking-wider">High Priority</p>
+</div>
+</div>
+<span class="px-sm py-xs bg-green-50 text-green-700 text-label-sm rounded font-bold">On Track</span>
+</div>
+<p class="font-body-base text-on-surface-variant mb-lg line-clamp-2">
+                        Comprehensive overhaul of the digital brand identity across all platforms, including new design system, asset library, and core marketing site redesign.
+                    </p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-base">
+<div class="flex -space-x-2">
+<img class="h-8 w-8 rounded-full border-2 border-white" data-alt="A professional headshot of a diverse team member against a soft blue corporate background in a bright, modern office setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXhutm7hZz4_2BWo9Obn0VrRfkitm6ZA0FUsdd44D6MnSSPJLVwT5Aul79-HY7ZbYKuKN0UGm0NyR1qKdulpweWKOIJ-N2gNp-NW2zR4wzln9s88wFt8HPNhacw6wubMs6c-RC9b9uCwTRtzbfKMgfxmqoPg0BLH9Pcme27xEMU1uWgfCBqAYYD_UXqZE8FZJWF2OlXe99lNcp6jPEt2L1_zq-S5H5B4hFnR1nHhp2094gDNazFgmUKcUu5wYoppDRcakU3dRgt80"/>
+<img class="h-8 w-8 rounded-full border-2 border-white" data-alt="A professional headshot of a focused designer working in a minimalist studio space with natural light and clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0ZXzVidY3VEZSTcatqdXH_Tgq_jyKAczpUuio6EBkbcje_S68kah1qFwDBDgV57SeSbIy9kB3pUDevOGLa4l3sgDhXF1ZikgT-AXfJOym2NGYtxZa6x8pHpzpRr1iWGbBXGCXDW2SKBIIB8FFiIMLHoY7jP5Jfkt543JX7hPht3w4TuP02KBCroEci6Qn5aKinC6cvO0kfEIMZl_BMjxtQLgSeMDYTPny2EUGlb0NZpKFgD5JHf-yS3J-87rdc9OgGd0uywfg1tg"/>
+<img class="h-8 w-8 rounded-full border-2 border-white" data-alt="A vibrant professional portrait of a tech expert in a sleek, high-tech workplace with soft depth of field and blue tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_6CSKxXX7KbUye4V15qoRPvds5RePpUds64LdA__CM1fsDFLaJ4QJ2U_Av73myk-Ac7-cEm2uy66aucXHbgOfOLbD72EyNq5ExS75TSXQY9J5o1F_KnvTgJTBAwOOAxVw1LNX5JjIjpzn794gpxoMF4_7KYdBCZdUrD1fHESxTlsHD218Qg15PGMQM8kFOxARRJMYoxnjaCpOm1hrCbTBRIZwuTChyeJYsM9fV7slKtNpbNbbdHVvnerQ3Hdip-SoA34y4rr_Rpo"/>
+<div class="h-8 w-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500">+4</div>
+</div>
+<span class="text-label-sm text-on-surface-variant">7 Assigned</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[18px]" data-icon="task_alt">task_alt</span>
+<span class="text-label-md">24 Active Tasks</span>
+</div>
+</div>
+<div class="mt-md h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] rounded-full"></div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="bg-white border border-slate-200 rounded-xl p-lg shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[24px]" data-icon="database">database</span>
+</div>
+<span class="px-sm py-xs bg-amber-50 text-amber-700 text-label-sm rounded font-bold">At Risk</span>
+</div>
+<h3 class="font-h3 text-h3 text-slate-900 mb-xs">Data Migration</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-lg">
+                        Migrating legacy CRM data to the new cloud-native infrastructure.
+                    </p>
+<div class="flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="h-8 w-8 rounded-full border-2 border-white" data-alt="Close up of a professional data architect in a clean white office environment with blue accent lighting and modern technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBYIg_iXmc7Ahb3920-acFylZNHrCowKTLx2QXsVboOZC4yA5mEMCU8Xe9idbAd-ihmz-XENlebXQRsHbltmg-P3IeTsKUCe4frVKZICU-gdA90R8tO-cbu5L_mIWuAZPWvX8GKDBZYei5WMbrB-ZyYNa6i1t_ffh5G6xSBIUTH6b0s5weaA7swCARqnq7d7B5Fi9I84qFtARyR3ufIn1xlwxD1p-vJXIZ9yvHRK2GvxbEy0cVcP40Bb51om0n9nIYCXI5kV65xgE"/>
+<img class="h-8 w-8 rounded-full border-2 border-white" data-alt="A portrait of a software engineer sitting in a minimalist workspace with soft daylight and organized desk items." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS_2QF_WMKwyq7J6OslNadexU2y9R9jZRPzWqRB3w8XirLvSFDO9IC7nJrES-omPC5ysrY7safm23Dz2RSn_8PRp4jac-9LxSNJUKYBF-X-IhmISspGAAtF_bpccLbypnfEaCtoBpADAHyqhYKV92wAQa6eXJ14_yNKbhkt4jGZkRxt1tNTvNZaY2lPVbtn9_kpbuEY9NaaxzrCRuq6B_VXp96aB6jnR86GoOS_jqZhGl4wX-mH49imyK7ceKf369eHDtqBlanjZQ"/>
+</div>
+<div class="flex items-center gap-xs text-error font-medium">
+<span class="material-symbols-outlined text-[18px]" data-icon="warning">warning</span>
+<span class="text-label-md">12 Blocked</span>
+</div>
+</div>
+<div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 w-[42%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="bg-white border border-slate-200 rounded-xl p-lg shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600">
+<span class="material-symbols-outlined text-[24px]" data-icon="mobile_friendly">mobile_friendly</span>
+</div>
+<span class="px-sm py-xs bg-slate-100 text-slate-600 text-label-sm rounded font-bold">Planning</span>
+</div>
+<h3 class="font-h3 text-h3 text-slate-900 mb-xs">Mobile App v2.0</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-lg">
+                        Discovery and wireframing phase for the next generation of our customer facing mobile application.
+                    </p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="h-8 w-8 rounded-full border-2 border-white" data-alt="A bright portrait of a product manager in a contemporary light-filled office space with minimalist corporate styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeKmC87RWQpLcpBsYhre8NXI_KrAdQRXOrKFjjgV-BrUzJsMO1uxA4phiA3Lr3KkNAjqH4k2tIHZU6JB0f6TqFNV8MG195cYblu7GrvCyxX1rUsYm0CjP30PbV3W9lkke2il1dYScaXQO4FY4zyzzHcWjNOGKioCf2gIlrOESlUkIxZIiYE4_g7PT-oEXhdWBqxG4IVsLx521SOTznJ-4DyYOHeitCRrqCLH71dFF3iEQ58qAJfL1KWHneiV-Q9Hpc-3QqZlubPug"/>
+<div class="h-8 w-8 rounded-full border-2 border-white bg-slate-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-slate-400" data-icon="add">add</span>
+</div>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="text-label-md">Starts Oct 1</span>
+</div>
+</div>
+</div>
+<!-- Project Card 4 -->
+<div class="bg-white border border-slate-200 rounded-xl p-lg shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined text-[24px]" data-icon="security">security</span>
+</div>
+<span class="px-sm py-xs bg-green-50 text-green-700 text-label-sm rounded font-bold">On Track</span>
+</div>
+<h3 class="font-h3 text-h3 text-slate-900 mb-xs">Security Audit</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-lg">
+                        Annual security compliance review and penetration testing for core API services.
+                    </p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="h-8 w-8 rounded-full border-2 border-white" data-alt="A professional security consultant in a high-tech monitoring center with clean lines and blue ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7pjyt3AD7e4TAspzNQ5VFx3cNpnEH65VvmRBoQFNLbiNZ6e8zSEFX2rr02EdxkgXu1P2nQAGjQQmzIEX0cajldG3uvclQXF5m4BP_-66SKGyuGnzFPLVRsDoPsLaJduL2nNKXffr5Ts8mpU2NZi4-HYf6bdtHlSpaeiqYIQTwox2MXxdeQ8cex-wtQtcyi7-zd1XkQ8wLbdERlfbJeBX_wvQxBcTRxPZSi1xS-IYp81KP6GLaH8gA9bOYU7iXEMme8KHei1kjjUE"/>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[18px]" data-icon="task_alt">task_alt</span>
+<span class="text-label-md">8 Tasks</span>
+</div>
+</div>
+</div>
+<!-- Project Card 5: Large Visualization -->
+<div class="lg:col-span-2 group relative bg-slate-900 rounded-xl overflow-hidden shadow-lg min-h-[240px] flex">
+<div class="p-lg flex flex-col justify-between z-10 w-full md:w-1/2 bg-slate-900">
+<div>
+<span class="px-sm py-xs bg-blue-600/20 text-blue-400 text-label-sm rounded font-bold border border-blue-400/30">Active</span>
+<h3 class="font-h3 text-h3 text-white mt-md">Internal Tools Expansion</h3>
+<p class="font-body-sm text-body-sm text-slate-400 mt-sm">Developing a suite of custom dashboards for the operations team to streamline workflow.</p>
+</div>
+<div class="flex items-center gap-lg mt-lg">
+<div class="flex -space-x-2">
+<img class="h-8 w-8 rounded-full border-2 border-slate-900" data-alt="Portrait of a developer in a modern, dark-themed coding environment with subtle glowing accents and clean aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkPVyU34hEWiiaTJddpxSG1gsMoiSQ9xttOusJUuzzqvT_ENmjrIltawpz6MdGomqZUbKR_xv3q6ET1vYpiWB9MfWcERck6tvbVmLHEZSHmoCbzyOts38Tcsk5J0seJ_DCui6EK6_TXsdBDPX1Ku_JipWN3jOxGq0juE52HQOat7a774DbEl3SA9baFenyZ3Qk7KAvbnnXBh1yKdCfW8Q_tKAt0VXvCTbAaWf-tfkT0xE-fawefJqxPzAgGXoRgOd2vew2aLnnRgo"/>
+<img class="h-8 w-8 rounded-full border-2 border-slate-900" data-alt="Portrait of a project lead in a sleek, dimly lit executive office with blue highlights and professional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVseVf4KRxhy9ILp-Ex7ecIk0m3_XRmpYhoCTw8blqz0Iig6saAqXzeSQ4kOHVvfs_2Jmv6ijhLqJovSZnurtAojdszZl9-xFo_lUrBS_KeExhn04QJ6w3VQUFxx6x_tEfJiAACd0QJT0idSqrKx_bttd9Sp4o87LKyk_CPPknl0Ob7fdtYF_-SFChw-bt7HDPI6Wld74vIBbEr6GfRMjPH8UwtZOq7p7rdr-3N40tpVFuODeHHNh7h5QhvtpEK_layNk5xcoziDI"/>
+</div>
+<div class="text-white">
+<span class="block text-h3 font-bold leading-none">15</span>
+<span class="text-label-sm text-slate-400">Team Active</span>
+</div>
+</div>
+</div>
+<div class="hidden md:block w-1/2 relative">
+<div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-transparent to-transparent z-10"></div>
+<img class="w-full h-full object-cover grayscale opacity-50 contrast-125" data-alt="A cinematic, high-contrast overhead shot of a modern architectural model in a dark gallery, lit with sharp blue and white lights to emphasize geometric precision and corporate minimalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9h4dw822YDuGZQxYxfvRDD0e0fSPcLGaH83DHaUg9zQAEvMZAI8UP4qQCaHyClR9aC7-wiEUPArK0dYxXwfsUEIvTPQWSxou_2Sl-fC1DlxqaGET1WqAf73FcCAiPQJuo5ZTtNqSU7XMqdNM9ATk7GPIfzp9-d6rBOy56wfAcNXAeM51uM1CPeySRwrcqXKlMpacfwWkFJpQVDORyCbTmLwasx5aHToyZzo_3RhNfRKISJoov9MSlwWRCDFS3Fr7EZHYFY2CMee8"/>
+</div>
+</div>
+</div>
+<!-- Footer Stats -->
+<div class="mt-2xl grid grid-cols-2 md:grid-cols-4 gap-gutter border-t border-slate-200 pt-lg">
+<div>
+<span class="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold">Total Projects</span>
+<p class="text-h2 font-h2 text-on-background">12</p>
+</div>
+<div>
+<span class="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold">Active Tasks</span>
+<p class="text-h2 font-h2 text-primary">84</p>
+</div>
+<div>
+<span class="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold">Completion Rate</span>
+<p class="text-h2 font-h2 text-on-background">92%</p>
+</div>
+<div>
+<span class="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold">Team Utilization</span>
+<p class="text-h2 font-h2 text-on-background">78%</p>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB (Suppressed based on screen rules, but could be added if Home) -->
+</body></html>

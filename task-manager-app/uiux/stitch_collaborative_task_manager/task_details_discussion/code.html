@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Task Details - Database Schema Optimization</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#eeefff",
+                    "outline-variant": "#c3c6d7",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#f0f0fb",
+                    "on-background": "#191b23",
+                    "background": "#faf8ff",
+                    "surface-container-high": "#e7e7f3",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191b23",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "primary": "#004ac6",
+                    "on-surface-variant": "#434655",
+                    "secondary": "#505f76",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#faf8ff",
+                    "secondary-container": "#d0e1fb",
+                    "on-primary-fixed": "#00174b",
+                    "inverse-surface": "#2e3039",
+                    "tertiary": "#943700",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-dim": "#d9d9e5",
+                    "surface-container-low": "#f3f3fe",
+                    "surface-container": "#ededf9",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e1e2ed",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary-container": "#ffede6",
+                    "primary-fixed": "#dbe1ff",
+                    "secondary-fixed": "#d3e4fe",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#54647a",
+                    "primary-container": "#2563eb",
+                    "surface-tint": "#0053db",
+                    "outline": "#737686",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-variant": "#e1e2ed",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#bc4800",
+                    "surface": "#faf8ff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "tertiary-fixed": "#ffdbcd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin": "32px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "base": "8px",
+                    "lg": "24px",
+                    "gutter": "24px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-base": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "h2": ["Inter"],
+                    "h3": ["Inter"],
+                    "h1": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["13px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #faf8ff;
+        }
+    </style>
+</head>
+<body class="font-body-base text-on-background antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full h-16 bg-white dark:bg-slate-900 flex items-center justify-between px-6 z-40 shadow-sm border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-600 dark:text-blue-400">TaskFlow</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="font-inter antialiased text-sm text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 px-1 py-5" href="#">Projects</a>
+<a class="font-inter antialiased text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-1" href="#">Team</a>
+<a class="font-inter antialiased text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-1" href="#">Reports</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<img alt="User Avatar" class="w-8 h-8 rounded-full border border-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJV8UlTPnB83_MGwoQ8MzDV6WLxtZZlJ-dlvbaBkqWn1wL4ZKjY-dVxfxRMevuTNdzSyf-bqwL70-lrPB6TBfUercUuCTuTDva2mkYU2DVF5kW1raMRL4u87R9UhDK4nR30Zzto7HutouETzL3SNd_cHxVgAcp2kPWmOZM_hK1pPtsTTtpDxh76RgkqyDGCQUHBPz6uAcLuNpzCxFvfcsPocSGarV5Ym8LWNcHEk8gxfVyRtdNXguoYv4qWizgPy0URrdgKl4rqkw"/>
+</div>
+</header>
+<!-- SideNavBar (Workspace Shell) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col z-50 pt-16">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<div>
+<h2 class="text-lg font-black tracking-tight text-slate-900 dark:text-white leading-tight">Workspace</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">Corporate Team</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 bg-blue-50/50 dark:bg-blue-900/20 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+                    Projects
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</nav>
+<button class="w-full mt-8 py-2.5 px-4 bg-primary text-white rounded-lg font-semibold text-sm shadow-sm hover:opacity-90 active:opacity-80 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                Create Task
+            </button>
+</div>
+<div class="mt-auto p-6 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pl-[280px] pt-16 min-h-screen">
+<div class="max-w-6xl mx-auto p-lg">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-md text-slate-500">
+<span class="text-label-sm font-label-sm">Workspace</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<span class="text-label-sm font-label-sm">Core Platform</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<span class="text-label-sm font-label-sm text-primary">Task Details</span>
+</nav>
+<!-- Layout Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Center Column: Primary Content -->
+<div class="col-span-8 space-y-md">
+<!-- Task Header Card -->
+<div class="bg-white border border-slate-200 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.05)] p-lg">
+<div class="flex items-start justify-between mb-md">
+<h1 class="font-h1 text-h1 text-on-surface">Database Schema Optimization</h1>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-slate-50 rounded-lg text-slate-400">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+<button class="p-2 hover:bg-slate-50 rounded-lg text-slate-400">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+</div>
+<div class="flex flex-wrap gap-md mb-lg">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full border border-blue-100">
+<span class="material-symbols-outlined text-sm" data-icon="sync" style="font-variation-settings: 'FILL' 0;">sync</span>
+<span class="text-label-sm font-label-sm">In Progress</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-700 rounded-full border border-red-100">
+<span class="material-symbols-outlined text-sm" data-icon="priority_high">priority_high</span>
+<span class="text-label-sm font-label-sm">High Priority</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-600 rounded-full border border-slate-200">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm">Oct 24, 2023</span>
+</div>
+</div>
+<div class="prose max-w-none">
+<h3 class="font-h3 text-h3 mb-sm">Description</h3>
+<p class="font-body-base text-body-base text-on-surface-variant leading-relaxed">
+                                The current database schema is experiencing performance degradation under high concurrent loads. We need to analyze the current indexing strategy and normalize the core tables to reduce redundancy and improve write speeds. This task includes auditing the <code>user_meta</code> and <code>transaction_logs</code> tables.
+                            </p>
+</div>
+<div class="mt-lg pt-lg border-t border-slate-100">
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white bg-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj0eVFDm4Kj-s8E-fjXQ6KBj3eGZLRGwBTPNeWbovrpJZtHnciUAx-30aJ9zpJwSpR7u42LIlAAlaG5zAEcYvnSwfPEtkKjK-CZ3xUxzfPpu_hvs-JFz9cpQlLZibLFrma0X8o8rUqif3x3oneOJFXoXff4u6YXgvPasla3kZ765ZeBI6_-FHjTVDZhhSHiFuLrN0U4HA9eLtAPp1YlUARV53PpBaz2LSbQs8BDW4tUPZN7ygnfMrkNogaoja1XEPTKgz0a5Aej7Q"/>
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white bg-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMmYATjSm1rwpvsN57sLARgO568bwm5wAyzBHbnQ44mbRiuvzIctYXJ3AE8MfaS9p0iKKNsRKOlSwK-nGcg9pUDFDdmcb0WPuSUrgBidrF3S4sVosCiyg3dLWByVs0Sd-e_m8Yju2BmMrN9sNBKJ7fpTZtJwC-GtblgJdY6G1MHF1gYsKJTzPNJynXE9iWVq1z6nDGNfnpgSuhiKZRUNxbDCc17KLyY4kgwW0Wp2ge0jzTg5-IU3XvIXQwL7WoWkb2OVCuTM_5GRg"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center text-[10px] font-bold text-blue-600">+3</div>
+</div>
+<button class="text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="add_circle">add_circle</span>
+                                    Invite Collaborators
+                                </button>
+</div>
+</div>
+</div>
+<!-- Discussion Section -->
+<div class="bg-white border border-slate-200 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.05)] overflow-hidden">
+<div class="p-lg border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
+<h3 class="font-h3 text-h3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="chat_bubble">chat_bubble</span>
+                                Discussion
+                            </h3>
+<span class="text-label-sm font-label-sm text-slate-500">4 Comments</span>
+</div>
+<div class="p-lg space-y-lg">
+<!-- Comment 1 -->
+<div class="flex gap-md">
+<img alt="John Doe" class="w-10 h-10 rounded-full border border-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnXWaZYO3r9NGxDPMdehj-_V5PSqK1XIRii7vkTbby-P-ktcxTg04WnbAhr-1E9k5hnRPyw1raaT3Z7EiEv06lzeOI1w1aRFfnIS9nq-sx7MHPCdBap8Xx9gtoeIJ5LsPMd5FDeLdlo-3moknVVV3b1Mwdq6muUZXGWCTI8eWLvyRL3BnH4yQ1H4TayIMIN_BLhktb9yBYxxTpE_ov4GyHGqsRLcSY6cHaJJp19wDWMZ5IEMAFMdCYS7mSGHiJMBjBuFS9TsRwlHo"/>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-bold text-body-sm">John Doe</span>
+<span class="text-xs text-slate-400">2 hours ago</span>
+</div>
+<div class="bg-slate-50 p-md rounded-xl rounded-tl-none border border-slate-100">
+<p class="text-body-sm text-on-surface-variant">Let's normalize the user_meta table. The current structure is leading to too many null columns and affecting the index size.</p>
+</div>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="flex gap-md">
+<img alt="Alice Moore" class="w-10 h-10 rounded-full border border-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSYIDV_d0Bv8TQXjy2HAGrAu0_JzyTFwE12gGZGJ9NqMTw71jA-niC3RhcHrGkPedjsda-5Byy5w6jIfqmQB1BCC0-YtP7ufjA9ic7wNxW1XWFhENi7AXSoNBhVnNuGWqrX_ZDYAx9eRXkFObfAekbEW-jgIPM8PSIUDYIhBQ6MzoiK9VfytMz6KShjuSCN7gyKZz3c2Ie2pivtuXkmQ9Tb9L0xubRni4pGUlWcru2fgHHwsmSzwUtTyorvo229lC32Ixizi-a0Hk"/>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-bold text-body-sm">Alice Moore</span>
+<span class="text-xs text-slate-400">1 hour ago</span>
+</div>
+<div class="bg-blue-50 p-md rounded-xl rounded-tl-none border border-blue-100">
+<p class="text-body-sm text-blue-900">Agreed. I've started a draft of the new schema in the Wiki. Should we also look at partitioning the logs?</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment Input -->
+<div class="p-lg bg-slate-50/50 border-t border-slate-100">
+<div class="flex gap-md">
+<img alt="My Avatar" class="w-10 h-10 rounded-full border border-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdGcCknz4gOkly0fES1__xU0HjcxI0Hlge3WeBLzUUgxtUukfUy7MLc_UY2pXn6xwQFCm-Cj9DBPv5aVq6XJtuAqaGQfe2GyM7ukh0g9hQgBcAnxHvouzCfMO2QSetJRqi4Hwn0uowaEhsVc_X5j6-J2I2Xqelw1SLDX1gJKEKOXXG2yUs-oT-f1COjWAMSlEGYwAi6nVKJn_S-bZcl3yhDsxtmY9M7bZm3u2phUcRy0uA_W1m_mgW88xkZ1aRR9ORBlRc5aV8iYI"/>
+<div class="flex-1 relative">
+<textarea class="w-full border-slate-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-body-sm min-h-[100px] p-md" placeholder="Write a message..."></textarea>
+<div class="absolute bottom-3 right-3 flex gap-2">
+<button class="p-1.5 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-label-sm font-label-sm shadow-sm hover:opacity-90 active:scale-95 transition-all">
+                                            Send
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Metadata -->
+<div class="col-span-4 space-y-md">
+<!-- Metadata Card -->
+<div class="bg-white border border-slate-200 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.05)] p-lg">
+<h4 class="font-label-md text-label-md text-slate-400 mb-lg tracking-widest uppercase">Task Metadata</h4>
+<div class="space-y-lg">
+<!-- Field: Assigned To -->
+<div>
+<label class="block font-label-sm text-label-sm text-slate-500 mb-sm">Assigned To</label>
+<div class="flex items-center gap-3 p-2 border border-slate-100 rounded-lg hover:border-slate-200 transition-colors cursor-pointer">
+<img alt="John Doe" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWdjdoM_QLG3LcqquyV_xpLrDywjU6JIu0LSC6ZSr3xopNmhH5KixnlWi_CPlDtfkbU73SWS5HD0JdAkgCbUKb9VKDyW7Vm8iX0aduYja1yanolxexnEjvDW3Kor3F0UjfX3wfrLyR998BDE38inRx-ljZnDRc5PcW4n4tTeezOSqw30IrKXAzSq-UucB-ss39DN-a2S7AirFMdgIt98cYLCSefuIPaaWycw8nLe0GFKvU8B_HALAKYHtVbBcMBW2NgfBnwNDnJhM"/>
+<div class="flex-1">
+<p class="text-body-sm font-semibold">John Doe</p>
+<p class="text-[10px] text-slate-400">Lead Engineer</p>
+</div>
+<span class="material-symbols-outlined text-slate-300" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Field: Labels -->
+<div>
+<label class="block font-label-sm text-label-sm text-slate-500 mb-sm">Labels</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 bg-purple-50 text-purple-600 border border-purple-100 rounded text-[11px] font-bold uppercase tracking-wider">Engineering</span>
+<span class="px-2.5 py-1 bg-amber-50 text-amber-600 border border-amber-100 rounded text-[11px] font-bold uppercase tracking-wider">Database</span>
+<span class="px-2.5 py-1 bg-slate-100 text-slate-500 border border-slate-200 rounded text-sm flex items-center justify-center w-8 h-7">
+<span class="material-symbols-outlined text-xs" data-icon="add">add</span>
+</span>
+</div>
+</div>
+<hr class="border-slate-100"/>
+<!-- Field: Project -->
+<div>
+<label class="block font-label-sm text-label-sm text-slate-500 mb-xs">Project</label>
+<p class="text-body-sm font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                    Infrastructure Scaling 2024
+                                </p>
+</div>
+<!-- Field: Created -->
+<div class="flex justify-between items-end">
+<div>
+<label class="block font-label-sm text-label-sm text-slate-500 mb-xs">Created On</label>
+<p class="text-body-sm">Oct 12, 2023</p>
+</div>
+<div class="text-right">
+<label class="block font-label-sm text-label-sm text-slate-500 mb-xs">Estimated</label>
+<p class="text-body-sm">24h</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Banner -->
+<div class="bg-primary text-white rounded-xl p-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-h3 text-h3 mb-sm">Need Help?</h4>
+<p class="text-xs text-white/80 mb-md">Connect with an architect to review the proposed schema changes before implementation.</p>
+<button class="bg-white/20 hover:bg-white/30 text-white text-label-sm font-label-sm py-2 px-4 rounded-lg w-full transition-colors border border-white/30">
+                                Request Review
+                            </button>
+</div>
+<!-- Abstract Design Element -->
+<div class="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+<div class="absolute -top-10 -left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Task Progress Widget -->
+<div class="bg-white border border-slate-200 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.05)] p-lg">
+<div class="flex items-center justify-between mb-md">
+<span class="font-label-md text-label-md">Checklist</span>
+<span class="text-xs font-bold text-primary">65%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 mb-lg">
+<div class="bg-primary h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+<ul class="space-y-sm">
+<li class="flex items-center gap-3 text-body-sm text-slate-400 line-through">
+<span class="material-symbols-outlined text-green-500 text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                Audit user_meta table
+                            </li>
+<li class="flex items-center gap-3 text-body-sm text-slate-400 line-through">
+<span class="material-symbols-outlined text-green-500 text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                Identify bottleneck queries
+                            </li>
+<li class="flex items-center gap-3 text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+                                Draft normalization plan
+                            </li>
+<li class="flex items-center gap-3 text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+                                Implementation in dev environment
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for Task-related Action (suppressed on details pages usually, but kept if it's the primary workflow button) -->
+<!-- As per instructions: "You MUST suppress the FAB on Settings, Profile, Details, and Transactional screens." -->
+</body></html>

@@ -1,12 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthLayout from '../components/layout/AuthLayout';
+import InputField from '../components/ui/InputField';
+import Button from '../components/ui/Button';
+import { register } from '../services/authService';
 
 const RegisterPage: React.FC = () => {
-    return (
-        <div className="register-page">
-            <h1>Register</h1>
-            {/* Register Form */}
-        </div>
-    );
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      await register({ username, email, password });
+      navigate('/login');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Registration failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <AuthLayout 
+      title="Create Account" 
+      subtitle="Join TaskFlow to start collaborating with your team."
+    >
+      <form onSubmit={handleRegister} className="space-y-6">
+        <InputField
+          label="Full Name"
+          placeholder="John Doe"
+          icon="person"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <InputField
+          label="Email Address"
+          type="email"
+          placeholder="name@company.com"
+          icon="mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <InputField
+          label="Password"
+          type="password"
+          placeholder="••••••••"
+          icon="lock"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        
+        {error && <p className="text-xs font-bold text-red-600 uppercase text-center">{error}</p>}
+
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? 'Creating account...' : 'Sign Up'}
+        </Button>
+
+        <p className="text-center text-body-sm text-slate-500">
+          Already have an account?{' '}
+          <Link to="/login" className="text-primary font-bold hover:underline">
+            Log in
+          </Link>
+        </p>
+      </form>
+    </AuthLayout>
+  );
 };
 
 export default RegisterPage;
