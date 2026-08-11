@@ -33,7 +33,7 @@ public class TaskService(ApplicationDbContext context) : ITaskService
         return MapToDto(task);
     }
 
-    public void UpdateStatus(int id, string status)
+    public void UpdateStatus(int id, TaskStatus status)
     {
         var task = context.Tasks.Find(id);
 
@@ -42,7 +42,7 @@ public class TaskService(ApplicationDbContext context) : ITaskService
             return;
         }
 
-        task.Status = Enum.GetValues<TaskStatus>().FirstOrDefault(x => nameof(x) == status);
+        task.Status = status;
         context.Tasks.Update(task);
         context.SaveChanges();
     }

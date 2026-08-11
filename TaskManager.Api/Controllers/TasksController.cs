@@ -45,7 +45,7 @@ public class TasksController : ControllerBase
     [HttpPut("{id}/status")]
     public IActionResult UpdateStatus(int id, [FromQuery] TaskStatus status)
     { 
-        _taskService.UpdateStatus(id, nameof(status));
+        _taskService.UpdateStatus(id, status);
         return Ok();
     }
 

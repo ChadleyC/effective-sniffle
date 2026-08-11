@@ -12,7 +12,7 @@ export const createTask = async (task: Partial<Task>) => {
 }
 
 export const updateTaskStatus = async (id: number, status: string) => {
-  const res = await API.patch(`/tasks/${id}/status`, { status })
+  const res = await API.put(`/tasks/${id}/status`, null, { params: { status } })
   return res.data
 }
 
