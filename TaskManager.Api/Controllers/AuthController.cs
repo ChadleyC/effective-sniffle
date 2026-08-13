@@ -1,7 +1,8 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.DTOs;
 using TaskManager.Api.Services;
-using TaskManager.Api.Data;
 
 namespace TaskManager.Api.Controllers;
 
@@ -22,19 +23,38 @@ public class AuthController : ControllerBase
         var result = await _authService.Register(dto);
 
         if (!result)
-            return BadRequest("Email already exists");
+            return BadRequest(new { message = "Email already exists" });
 
-        return Ok("User registered successfully");
+        var (token, user) = await _authService.Login(new LoginDto
+        {
+            Email = dto.Email,
+            Password = dto.Password
+        });
+
+        return Ok(new { token, user });
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto dto)
     {
-        var token = await _authService.Login(dto);
+        var (token, user) = await _authService.Login(dto);
 
         if (token == null)
-            return Unauthorized("Invalid credentials");
+            return Unauthorized(new { message = "Invalid credentials" });
 
-        return Ok(new { token });
+        return Ok(new { token, user });
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<IActionResult> Me()
+    {
+        var userId = int.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var user = await _authService.GetCurrentUser(userId);
+        if (user == null) return NotFound();
+        return Ok(user);
     }
 }

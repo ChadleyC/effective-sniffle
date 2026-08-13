@@ -1,14 +1,17 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import PageLayout from "../components/layout/PageLayout";
 import InputField from "../components/ui/InputField";
 import Button from "../components/ui/Button";
+import { useAuth } from "../context/AuthContext";
 
 const Profile = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const { user } = useAuth();
+  const [username, setUsername] = useState(user?.username ?? "");
+  const [email, setEmail] = useState(user?.email ?? "");
 
   const saveProfile = () => {
-    alert("Profile updated");
+    toast.success("Profile updated");
   };
 
   return (
@@ -18,9 +21,9 @@ const Profile = () => {
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
           <InputField
             label="Name"
-            value={name}
+            value={username}
             placeholder="Your Name"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <InputField
             label="Email Address"

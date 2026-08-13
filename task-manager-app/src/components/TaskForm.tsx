@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { createTask } from "../services/taskService"
 
 const TaskForm = ({projectId}:{projectId:number}) => {
@@ -6,7 +6,7 @@ const TaskForm = ({projectId}:{projectId:number}) => {
 const [title,setTitle]=useState("")
 const [dueDate,setDueDate]=useState("")
 
-const handleSubmit=async(e:any)=>{
+const handleSubmit=async(e: FormEvent)=>{
 e.preventDefault()
 
 if(!title) return alert("Title required")

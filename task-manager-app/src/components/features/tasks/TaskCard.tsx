@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import type { Task } from '../../../types';
 import Card from '../../ui/Card';
 import Badge from '../../ui/Badge';
@@ -7,9 +7,12 @@ import Avatar from '../../ui/Avatar';
 interface TaskCardProps {
   task: Task;
   onClick?: () => void;
+  draggable?: boolean;
+  onDragStart?: (id: number) => void;
+  onDragEnd?: () => void;
 }
 
-const TaskCard = ({ task, onClick }: TaskCardProps) => {
+const TaskCard = memo(({ task, onClick, draggable = false, onDragStart, onDragEnd }: TaskCardProps) => {
   const priorityVariant = (priority: string): 'error' | 'warning' | 'info' | 'neutral' => {
     switch (priority?.toLowerCase()) {
       case 'high': return 'error';
@@ -20,7 +23,20 @@ const TaskCard = ({ task, onClick }: TaskCardProps) => {
   };
 
   return (
-    <Card hover onClick={onClick} className="p-4 group">
+    <Card
+      hover
+      onClick={onClick}
+      className="p-4 group"
+      draggable={draggable}
+      onDragStart={(event) => {
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', String(task.id));
+        onDragStart?.(task.id);
+      }}
+      onDragEnd={() => {
+        onDragEnd?.();
+      }}
+    >
       <div className="flex items-start justify-between mb-3">
         <Badge variant={priorityVariant(task.priority)}>
           {task.priority || 'Normal'}
@@ -41,6 +57,8 @@ const TaskCard = ({ task, onClick }: TaskCardProps) => {
       </div>
     </Card>
   );
-};
+});
+
+TaskCard.displayName = 'TaskCard';
 
 export default TaskCard;

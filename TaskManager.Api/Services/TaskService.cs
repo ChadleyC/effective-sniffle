@@ -15,12 +15,10 @@ public class TaskService(ApplicationDbContext context) : ITaskService
             .ToList();
     }
 
-    public TaskDto GetById(int id)
+    public TaskDto? GetById(int id)
     {
-        var task = context.Tasks.Find(id)
-            ?? throw new Exception("Task not found");
-
-        return MapToDto(task);
+        var task = context.Tasks.Find(id);
+        return task == null ? null : MapToDto(task);
     }
 
     public TaskDto Create(CreateTaskDto dto)
@@ -78,6 +76,6 @@ public class TaskService(ApplicationDbContext context) : ITaskService
         AssignedToId = dto.AssignedToId,
         CreatedAt = DateTime.UtcNow,
         DueDate = dto.DueDate,
-        Status = dto.Status
+        Status = dto.Status,
     };
 }

@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/layout/AuthLayout';
 import InputField from '../components/ui/InputField';
 import Button from '../components/ui/Button';
-import { register } from '../services/authService';
+import { register as apiRegister } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -12,16 +13,23 @@ const RegisterPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login: ctxLogin } = useAuth();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
-      await register({ username, email, password });
-      navigate('/login');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed.');
+      const { token, user } = await apiRegister({ username, email, password });
+      if (token && user) {
+        ctxLogin(token, user);
+        navigate('/dashboard');
+      } else {
+        navigate('/login');
+      }
+    } catch (err) {
+      const message = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(message || 'Registration failed.');
     } finally {
       setLoading(false);
     }

@@ -4,7 +4,7 @@ import type { Task } from './Task';
 export interface Project {
     id: number;
     name: string;
-    description: string;
+    description?: string | null;
     ownerId: number;
     createdAt: string;
     owner?: User;

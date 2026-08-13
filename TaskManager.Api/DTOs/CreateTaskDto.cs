@@ -19,7 +19,7 @@ public class CreateTaskDto
 
     public TaskPriority Priority { get; set; } = TaskPriority.Medium;
     
-    public TaskStatus Status { get; set; }
+    public TaskStatus Status { get; set; } = TaskStatus.Todo;
 
     public DateTime? DueDate { get; set; }
 }

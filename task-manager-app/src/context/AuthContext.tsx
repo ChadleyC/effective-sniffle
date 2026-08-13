@@ -1,33 +1,48 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { User } from '../types/User';
+import { getMe } from '../services/authService';
 
 interface AuthContextType {
     user: User | null;
     login: (token: string, user: User) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, _setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(() => !!localStorage.getItem('token'));
 
-    const login = (_token: string, _userData: User) => {
-        // Logic to set token and user
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        getMe()
+            .then((userData) => setUser(userData))
+            .catch(() => localStorage.removeItem('token'))
+            .finally(() => setLoading(false));
+    }, []);
+
+    const login = (token: string, userData: User) => {
+        setUser(userData);
+        localStorage.setItem('token', token);
     };
 
     const logout = () => {
-        // Logic to clear token and user
+        setUser(null);
+        localStorage.removeItem('token');
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+        <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user, loading }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {

@@ -18,8 +18,8 @@ public class AuthService(
         var user = new User
         {
             Email = dto.Email,
+            Username = dto.Username,
             PasswordHash = Hash(dto.Password),
-            TaskItem = null!
         };
 
         context.Users.Add(user);
@@ -27,18 +27,27 @@ public class AuthService(
         return true;
     }
 
-    public async Task<string?> Login(LoginDto dto)
+    public async Task<(string? Token, object? User)> Login(LoginDto dto)
     {
         var user = await context.Users
             .FirstOrDefaultAsync(x => x.Email == dto.Email);
 
         if (user == null)
-            return null;
+            return (null, null);
 
         if (user.PasswordHash != Hash(dto.Password))
-            return null;
+            return (null, null);
 
-        return tokenService.CreateToken(user);
+        var token = tokenService.CreateToken(user);
+        var userData = new { user.Id, user.Username, user.Email, user.CreatedAt };
+        return (token, userData);
+    }
+
+    public async Task<object?> GetCurrentUser(int userId)
+    {
+        var user = await context.Users.FindAsync(userId);
+        if (user == null) return null;
+        return new { user.Id, user.Username, user.Email, user.CreatedAt };
     }
 
     private static string Hash(string password)

@@ -30,7 +30,8 @@ public class TasksController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-        return Ok(_taskService.GetById(id));
+        var task = _taskService.GetById(id);
+        return task == null ? NotFound() : Ok(task);
     }
 
     // POST /api/tasks
@@ -44,7 +45,7 @@ public class TasksController : ControllerBase
     // PUT /api/tasks/10/status?status=Done
     [HttpPut("{id}/status")]
     public IActionResult UpdateStatus(int id, [FromQuery] TaskStatus status)
-    { 
+    {
         _taskService.UpdateStatus(id, status);
         return Ok();
     }

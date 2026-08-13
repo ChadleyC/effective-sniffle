@@ -10,15 +10,17 @@ namespace TaskManager.Api.Data
         public DbSet<TaskItem> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<TaskItem> TaskItem { get; set; }
         public DbSet<Comment> Comments { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Configuration for relationships can be added here
-             modelBuilder.Entity<TaskItem>()
+
+            modelBuilder.Entity<TaskItem>()
+                .ToTable("TaskItem");
+
+            modelBuilder.Entity<TaskItem>()
         .Property(t => t.Status)
         .HasConversion<string>();
 
@@ -30,6 +32,18 @@ namespace TaskManager.Api.Data
             .HasMany(p => p.TaskItems)
             .WithOne(t => t.Project)
             .HasForeignKey(t => t.ProjectId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Comment>()
+            .HasOne(c => c.TaskItem)
+            .WithMany(t => t.Comments)
+            .HasForeignKey(c => c.TaskId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Comment>()
+            .HasOne(c => c.User)
+            .WithMany()
+            .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         }
     }

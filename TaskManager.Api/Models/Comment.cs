@@ -1,4 +1,4 @@
-namespace TaskManager.Api.Models.Enums
+namespace TaskManager.Api.Models
 {
     public class Comment
     {
@@ -9,7 +9,7 @@ namespace TaskManager.Api.Models.Enums
         public DateTime CreatedAt { get; set; }
 
         // Navigation properties
-        public required Task TaskItem { get; set; }
-        public required User User { get; set; }
+        public TaskItem? TaskItem { get; set; }
+        public User? User { get; set; }
     }
 }

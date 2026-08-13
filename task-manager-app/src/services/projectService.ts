@@ -1,22 +1,34 @@
-// import api from './api';
+import API from './api';
+import type { Project } from '../types/Project';
 
-export const getProjects = async () => {
-    // return api.get('/projects');
-    return [];
+export const getProjects = async (): Promise<Project[]> => {
+    const res = await API.get('/projects');
+    return res.data;
+};
+
+export const getProject = async (id: number): Promise<Project> => {
+    const res = await API.get(`/projects/${id}`);
+    return res.data;
+};
+
+export const createProject = async (data: Partial<Project>): Promise<Project> => {
+    const res = await API.post('/projects', data);
+    return res.data;
+};
+
+export const updateProject = async (id: number, data: Partial<Project>): Promise<Project> => {
+    const res = await API.put(`/projects/${id}`, data);
+    return res.data;
+};
+
+export const deleteProject = async (id: number): Promise<void> => {
+    await API.delete(`/projects/${id}`);
 };
 
 export const projectService = {
     getAll: getProjects,
-    getById: async (_id: number) => {
-        // return api.get(`/projects/${id}`);
-    },
-    create: async (_data: any) => {
-        // return api.post('/projects', data);
-    },
-    update: async (_id: number, _data: any) => {
-        // return api.put(`/projects/${id}`, data);
-    },
-    delete: async (_id: number) => {
-        // return api.delete(`/projects/${id}`);
-    }
+    getById: getProject,
+    create: createProject,
+    update: updateProject,
+    delete: deleteProject
 };

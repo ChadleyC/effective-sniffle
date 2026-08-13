@@ -12,29 +12,22 @@ public class TaskItem
     [MaxLength(200)]
     public string Title { get; set; } = string.Empty;
 
-    public string IsCompleted { get; set; } = null!;
-
     public string? Description { get; set; }
 
-    // Todo | InProgress | Done  (we’ll convert to enum next step)
-        [Required]
+    [Required]
     public TaskStatus Status { get; set; } = TaskStatus.Todo;
 
-    // Low | Medium | High
     [Required]
     public TaskPriority Priority { get; set; } = TaskPriority.Medium;
 
-    // 🔗 Project relationship
     public int ProjectId { get; set; }
     public Project Project { get; set; } = null!;
 
-    // 🔗 Assigned user (optional)
     public int? AssignedToId { get; set; }
     public User? AssignedTo { get; set; }
 
-    public required DateTime? DueDate { get; set; }
-    public required  DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? DueDate { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    // 🔗 Comments
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }

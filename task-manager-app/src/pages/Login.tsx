@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/layout/AuthLayout';
 import InputField from '../components/ui/InputField';
 import Button from '../components/ui/Button';
-import { login } from '../services/authService';
+import { login as apiLogin } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,16 +12,19 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login: ctxLogin } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
-      await login(email, password);
-      navigate('/');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+      const { token, user } = await apiLogin(email, password);
+      ctxLogin(token, user);
+      navigate('/dashboard');
+    } catch (err) {
+      const message = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
