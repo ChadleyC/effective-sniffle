@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { logout } from '../../services/authService';
 import { useAuth } from '../../context/AuthContext';
@@ -10,7 +11,10 @@ const SideNavBar = () => {
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
     { name: 'Board', path: '/board', icon: 'view_kanban' },
+    { name: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
+    { name: 'Board', path: '/board', icon: 'view_kanban' },
     { name: 'Projects', path: '/projects', icon: 'assignment' },
+    { name: 'Profile', path: '/profile', icon: 'account_circle' },
     { name: 'Profile', path: '/profile', icon: 'account_circle' },
     { name: 'Settings', path: '/settings', icon: 'settings' },
   ];
@@ -54,6 +58,7 @@ const SideNavBar = () => {
           ))}
         </div>
         <div className="mt-8 px-6">
+          <Button variant="primary" className="w-full" icon="add" onClick={() => navigate('/board')}>
           <Button variant="primary" className="w-full" icon="add" onClick={() => navigate('/board')}>
             Create Task
           </Button>

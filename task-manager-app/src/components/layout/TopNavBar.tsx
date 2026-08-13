@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import Avatar from '../ui/Avatar';
 import { useAuth } from '../../context/AuthContext';

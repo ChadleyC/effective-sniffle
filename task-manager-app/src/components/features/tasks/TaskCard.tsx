@@ -10,6 +10,9 @@ interface TaskCardProps {
   draggable?: boolean;
   onDragStart?: (id: number) => void;
   onDragEnd?: () => void;
+  draggable?: boolean;
+  onDragStart?: (id: number) => void;
+  onDragEnd?: () => void;
 }
 
 const TaskCard = memo(({ task, onClick, draggable = false, onDragStart, onDragEnd }: TaskCardProps) => {

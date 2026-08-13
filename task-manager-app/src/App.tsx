@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import ProjectDetails from './pages/ProjectDetails';
 import Board from './pages/Board';
+import Board from './pages/Board';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';

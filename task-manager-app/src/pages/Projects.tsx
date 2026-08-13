@@ -1,9 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import PageLayout from '../components/layout/PageLayout';
 import PageErrorBoundary from '../components/PageErrorBoundary';
 import ProjectCard from '../components/features/projects/ProjectCard';
+import ProjectForm from '../components/projects/ProjectForm';
 import ProjectForm from '../components/projects/ProjectForm';
 import Button from '../components/ui/Button';
 import type { Project } from '../types';
@@ -13,7 +17,32 @@ type SortKey = 'name' | 'newest' | 'oldest';
 
 const Projects = () => {
   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [editing, setEditing] = useState<Project | null>(null);
+  const [deleting, setDeleting] = useState<Project | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState<SortKey>('name');
+
+  const fetchProjects = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const data = await getProjects();
+      setProjects(data);
+    } catch {
+      setError('Could not load projects. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -218,10 +247,67 @@ const Projects = () => {
         </div>
       )}
 
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-xl border border-slate-200 p-5 animate-pulse">
+              <div className="flex justify-between items-start mb-4">
+                <div className="h-12 w-12 bg-slate-200 rounded-lg" />
+                <div className="h-8 w-16 bg-slate-200 rounded-full" />
+              </div>
+              <div className="h-4 w-3/4 bg-slate-200 rounded mb-3" />
+              <div className="h-3 w-full bg-slate-100 rounded mb-2" />
+              <div className="h-3 w-2/3 bg-slate-100 rounded mb-6" />
+              <div className="h-2 w-full bg-slate-100 rounded-full" />
+            </div>
+          ))}
+        </div>
+      ) : filteredProjects.length === 0 ? (
+        <div className="py-20 text-center">
+          <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center">
+            <span className="material-symbols-outlined text-slate-400 text-[32px]">
+              {search ? 'search_off' : 'rocket_launch'}
+            </span>
+          </div>
+          <p className="font-h3 text-h3 text-on-surface mb-1">
+            {search ? 'No matching projects' : 'No projects yet'}
+          </p>
+          <p className="text-body-sm text-on-surface-variant mb-6">
+            {search
+              ? 'Try a different search term or clear the filter.'
+              : 'Click "Create New Project" to get started.'}
+          </p>
+          {search ? (
+            <Button variant="secondary" onClick={() => setSearch('')}>Clear Search</Button>
+          ) : (
+            <Button variant="primary" icon="add" onClick={openCreate}>Create New Project</Button>
+          )}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onClick={() => navigate(`/projects/${project.id}`)}
+              onEdit={openEdit}
+              onDelete={(p) => {
+                setError('');
+                setDeleting(p);
+              }}
+            />
+          ))}
+        </div>
+      )}
+
       <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-slate-200 pt-8">
         <div>
           <span className="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold">Total Projects</span>
           <p className="text-h2 font-h2 text-on-background">{projects.length}</p>
+        </div>
+        <div>
+          <span className="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold">Matching</span>
+          <p className="text-h2 font-h2 text-on-background">{filteredProjects.length}</p>
         </div>
         <div>
           <span className="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold">Matching</span>
