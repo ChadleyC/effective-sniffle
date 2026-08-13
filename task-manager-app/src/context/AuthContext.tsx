@@ -11,14 +11,16 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, _setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(null);
 
-    const login = (_token: string, _userData: User) => {
-        // Logic to set token and user
+    const login = (token: string, userData: User) => {
+        setUser(userData);
+        localStorage.setItem('token', token);
     };
 
     const logout = () => {
-        // Logic to clear token and user
+        setUser(null);
+        localStorage.removeItem('token');
     };
 
     return (
@@ -28,6 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {

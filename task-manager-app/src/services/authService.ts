@@ -1,17 +1,20 @@
-// import api from './api';
-// import type { LoginDto, RegisterDto } from '../types/Auth'; 
+import api from './api';
+import type { RegisterDto } from '../types/Auth';
 
-export const login = async (_email: string, _password: string) => {
-    // return api.post('/auth/login', { email, password });
-    return { data: { token: 'mock-token' } };
+export const login = async (email: string, password: string) => {
+    const res = await api.post('/Auth/login', { email, password });
+    const { token } = res.data;
+    localStorage.setItem('token', token);
+    return res.data;
 };
 
-export const register = async (_data: any) => {
-    // return api.post('/auth/register', data);
+export const register = async (_data: RegisterDto) => {
+    const { email, password } = _data;
+    return api.post('/Auth/register', { email, password });
 };
 
 export const logout = () => {
-    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
 };
 
 export const authService = {

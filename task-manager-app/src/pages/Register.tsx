@@ -20,8 +20,9 @@ const RegisterPage: React.FC = () => {
     try {
       await register({ username, email, password });
       navigate('/login');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed.');
+    } catch (err) {
+      const message = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(message || 'Registration failed.');
     } finally {
       setLoading(false);
     }

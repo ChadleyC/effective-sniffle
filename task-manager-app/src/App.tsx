@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import ProjectDetails from './pages/ProjectDetails';
+import Board from './pages/Board';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 
@@ -18,6 +19,7 @@ const App: React.FC = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/board" element={<Board />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { getComments, addComment } from "../services/commentService";
 import type { Comment } from "../types";
 
@@ -6,14 +6,20 @@ const Comments = ({ taskId }: { taskId: number }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [text, setText] = useState("");
 
-  useEffect(() => {
-    loadComments();
-  }, [taskId]);
-
-  const loadComments = async () => {
+  const loadComments = useCallback(async () => {
     const data = await getComments(taskId);
     setComments(data);
-  };
+  }, [taskId]);
+
+  useEffect(() => {
+    let cancelled = false;
+    getComments(taskId).then((data) => {
+      if (!cancelled) setComments(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [taskId]);
 
   const submit = async () => {
     if (!text.trim()) return;

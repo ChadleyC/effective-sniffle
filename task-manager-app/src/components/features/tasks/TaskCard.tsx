@@ -7,9 +7,12 @@ import Avatar from '../../ui/Avatar';
 interface TaskCardProps {
   task: Task;
   onClick?: () => void;
+  draggable?: boolean;
+  onDragStart?: (id: number) => void;
+  onDragEnd?: () => void;
 }
 
-const TaskCard = ({ task, onClick }: TaskCardProps) => {
+const TaskCard = ({ task, onClick, draggable = false, onDragStart, onDragEnd }: TaskCardProps) => {
   const priorityVariant = (priority: string): 'error' | 'warning' | 'info' | 'neutral' => {
     switch (priority?.toLowerCase()) {
       case 'high': return 'error';
@@ -20,7 +23,20 @@ const TaskCard = ({ task, onClick }: TaskCardProps) => {
   };
 
   return (
-    <Card hover onClick={onClick} className="p-4 group">
+    <Card
+      hover
+      onClick={onClick}
+      className="p-4 group"
+      draggable={draggable}
+      onDragStart={(event) => {
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', String(task.id));
+        onDragStart?.(task.id);
+      }}
+      onDragEnd={() => {
+        onDragEnd?.();
+      }}
+    >
       <div className="flex items-start justify-between mb-3">
         <Badge variant={priorityVariant(task.priority)}>
           {task.priority || 'Normal'}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PageLayout from '../components/layout/PageLayout';
 import StatsGrid from '../components/features/tasks/StatsGrid';
 import ProjectCard from '../components/features/projects/ProjectCard';
@@ -8,6 +9,7 @@ import Card from '../components/ui/Card';
 import type { Project } from '../types';
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   // Mock data for projects
   const recentProjects: Project[] = [
     { 
@@ -34,8 +36,8 @@ const Dashboard: React.FC = () => {
           <p className="font-body-base text-slate-500 mt-1">Monitor your team's throughput and project velocity.</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="secondary" icon="filter_list">Filters</Button>
-          <Button variant="secondary" icon="download">Export</Button>
+          <Button variant="secondary" icon="filter_list" onClick={() => navigate('/board')}>Filters</Button>
+          <Button variant="secondary" icon="download" onClick={() => navigate('/projects')}>Export</Button>
         </div>
       </div>
 
@@ -46,11 +48,11 @@ const Dashboard: React.FC = () => {
           <section>
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-h2 text-h2 text-on-surface">Recent Projects</h2>
-              <Button variant="ghost" className="text-primary font-semibold text-sm">View All</Button>
+              <Button variant="ghost" className="text-primary font-semibold text-sm" onClick={() => navigate('/projects')}>View All</Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {recentProjects.map(project => (
-                <ProjectCard key={project.id} project={project} />
+                <ProjectCard key={project.id} project={project} onClick={() => navigate(`/projects/${project.id}`)} />
               ))}
             </div>
           </section>
@@ -103,7 +105,7 @@ const Dashboard: React.FC = () => {
                 isSystem
               />
             </div>
-            <Button variant="secondary" className="w-full mt-8 uppercase tracking-wide">
+            <Button variant="secondary" className="w-full mt-8 uppercase tracking-wide" onClick={() => navigate('/board')}>
               Load More Activity
             </Button>
           </Card>
@@ -113,7 +115,17 @@ const Dashboard: React.FC = () => {
   );
 };
 
-const ActivityItem = ({ name, action, target, comment, status, time, isSystem }: any) => (
+interface ActivityItemProps {
+  name: string;
+  action: string;
+  target: string;
+  comment?: string;
+  status?: string;
+  time: string;
+  isSystem?: boolean;
+}
+
+const ActivityItem = ({ name, action, target, comment, status, time, isSystem }: ActivityItemProps) => (
   <div className="flex gap-4 text-on-surface">
     <div className="relative shrink-0">
       {isSystem ? (

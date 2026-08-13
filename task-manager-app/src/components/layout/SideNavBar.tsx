@@ -1,11 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 
 const SideNavBar = () => {
+  const navigate = useNavigate();
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: 'dashboard' },
+    { name: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
+    { name: 'Board', path: '/board', icon: 'view_kanban' },
     { name: 'Projects', path: '/projects', icon: 'assignment' },
+    { name: 'Profile', path: '/profile', icon: 'account_circle' },
     { name: 'Settings', path: '/settings', icon: 'settings' },
   ];
 
@@ -28,10 +31,10 @@ const SideNavBar = () => {
             <NavLink
               key={item.name}
               to={item.path}
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 `flex items-center gap-3 px-6 py-3 transition-all border-l-4 ${
-                  isActive 
-                    ? 'text-primary border-primary bg-blue-50/50' 
+                  isActive
+                    ? 'text-primary border-primary bg-blue-50/50'
                     : 'text-slate-600 border-transparent hover:bg-slate-50'
                 }`
               }
@@ -42,13 +45,13 @@ const SideNavBar = () => {
           ))}
         </div>
         <div className="mt-8 px-6">
-          <Button variant="primary" className="w-full" icon="add">
+          <Button variant="primary" className="w-full" icon="add" onClick={() => navigate('/board')}>
             Create Task
           </Button>
         </div>
       </nav>
       <div className="p-6 border-t border-slate-100">
-        <NavLink to="/support" className="flex items-center gap-3 text-slate-600 hover:text-primary transition-colors">
+        <NavLink to="/settings" className="flex items-center gap-3 text-slate-600 hover:text-primary transition-colors">
           <span className="material-symbols-outlined">contact_support</span>
           <span>Support</span>
         </NavLink>
